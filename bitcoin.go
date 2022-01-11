@@ -41,7 +41,6 @@ func (b Bitcoin) Call(params map[string]interface{}) (gjson.Result, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(data))
 
 	req, err := http.NewRequest("POST", b.Host, bytes.NewBuffer(data))
 	if err != nil {
@@ -136,6 +135,14 @@ func (b Bitcoin) SignRawTransactionWithWallet(rawtx string) (gjson.Result, error
 	data := map[string]interface{}{
 		"method": "signrawtransactionwithwallet",
 		"params": []interface{}{rawtx},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) ValidateAddress(address string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "validateaddress",
+		"params": []interface{}{address},
 	}
 	return b.Call(data)
 }
