@@ -146,3 +146,11 @@ func (b Bitcoin) ValidateAddress(address string) (gjson.Result, error) {
 	}
 	return b.Call(data)
 }
+
+func (b Bitcoin) DecodeRawTransaction(rawtx string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "decoderawtransaction",
+		"params": [1]string{rawtx},
+	}
+	return b.Call(data)
+}
