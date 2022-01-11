@@ -84,7 +84,7 @@ func (b Bitcoin) GetBlockCount() (gjson.Result, error) {
 func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "gettransaction",
-		"params": []interface{}{txid},
+		"params": [1]string{txid},
 	}
 	return b.Call(data)
 }
@@ -134,7 +134,7 @@ func (b Bitcoin) FundRawTransaction(rawtx string, feerate float64) (gjson.Result
 func (b Bitcoin) SignRawTransactionWithWallet(rawtx string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "signrawtransactionwithwallet",
-		"params": []interface{}{rawtx},
+		"params": [1]string{rawtx},
 	}
 	return b.Call(data)
 }
@@ -142,7 +142,7 @@ func (b Bitcoin) SignRawTransactionWithWallet(rawtx string) (gjson.Result, error
 func (b Bitcoin) ValidateAddress(address string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "validateaddress",
-		"params": []interface{}{address},
+		"params": [1]string{address},
 	}
 	return b.Call(data)
 }
@@ -150,6 +150,14 @@ func (b Bitcoin) ValidateAddress(address string) (gjson.Result, error) {
 func (b Bitcoin) DecodeRawTransaction(rawtx string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "decoderawtransaction",
+		"params": [1]string{rawtx},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) SendRawTransaction(rawtx string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "sendrawtransaction",
 		"params": [1]string{rawtx},
 	}
 	return b.Call(data)

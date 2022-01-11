@@ -88,8 +88,22 @@ func TestFundRawTransaction(t *testing.T) {
 	rawtx = tx.Get("hex").String()
 }
 
+func TestSignRawTransactionWithWallet(t *testing.T) {
+	sign_tx, err := bitcoin.SignRawTransactionWithWallet(rawtx)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+	rawtx = sign_tx.Get("hex").String()
+}
+
 func TestDecodeRawTransaction(t *testing.T) {
 	if _, err := bitcoin.DecodeRawTransaction(rawtx); err != nil {
+		t.Errorf(err.Error())
+	}
+}
+
+func TestSendRawTransaction(t *testing.T) {
+	if _, err := bitcoin.SendRawTransaction(rawtx); err != nil {
 		t.Errorf(err.Error())
 	}
 }
