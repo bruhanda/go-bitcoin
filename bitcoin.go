@@ -133,7 +133,7 @@ func (b Bitcoin) FundRawTransaction(rawtx string, feerate float64) (gjson.Result
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
 		"params": []interface{}{rawtx, map[string]interface{}{
-			"feeRate": feerate * 1000,
+			"feeRate": feerate,
 		}},
 	}
 	return b.Call(data)
