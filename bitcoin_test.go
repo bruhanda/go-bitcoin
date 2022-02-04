@@ -39,8 +39,25 @@ func TestImportAddress(t *testing.T) {
 	}
 }
 
+func TestValidateAddress(t *testing.T) {
+	address_valid, err := bitcoin.ValidateAddress(address)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	if address_valid.Get("isvalid").Bool() == false {
+		t.Errorf("Invalid address.")
+	}
+}
+
 func TestGetBlockCount(t *testing.T) {
 	if _, err := bitcoin.GetBlockCount(); err != nil {
+		t.Errorf(err.Error())
+	}
+}
+
+func TestGetBalance(t *testing.T) {
+	if _, err := bitcoin.GetBalance(); err != nil {
 		t.Errorf(err.Error())
 	}
 }
@@ -75,4 +92,24 @@ func TestFundRawTransaction(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 	rawtx = tx.Get("hex").String()
+}
+
+func TestSignRawTransactionWithWallet(t *testing.T) {
+	sign_tx, err := bitcoin.SignRawTransactionWithWallet(rawtx)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+	rawtx = sign_tx.Get("hex").String()
+}
+
+func TestDecodeRawTransaction(t *testing.T) {
+	if _, err := bitcoin.DecodeRawTransaction(rawtx); err != nil {
+		t.Errorf(err.Error())
+	}
+}
+
+func TestSendRawTransaction(t *testing.T) {
+	if _, err := bitcoin.SendRawTransaction(rawtx); err != nil {
+		t.Errorf(err.Error())
+	}
 }
