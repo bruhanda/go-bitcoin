@@ -56,6 +56,12 @@ func TestGetBlockCount(t *testing.T) {
 	}
 }
 
+func TestGetBalance(t *testing.T) {
+	if _, err := bitcoin.GetBalance(); err != nil {
+		t.Errorf(err.Error())
+	}
+}
+
 func TestListUnspent(t *testing.T) {
 	list_unspent, err := bitcoin.ListUnspent()
 	if err != nil || len(list_unspent.Array()) == 0 {
