@@ -133,7 +133,7 @@ func (b Bitcoin) FundRawTransaction(rawtx string, feerate float64) (gjson.Result
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
 		"params": []interface{}{rawtx, map[string]interface{}{
-			"feeRate": feerate * 1000,
+			"feeRate": feerate,
 		}},
 	}
 	return b.Call(data)
@@ -167,6 +167,14 @@ func (b Bitcoin) SendRawTransaction(rawtx string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "sendrawtransaction",
 		"params": [1]string{rawtx},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) GetAddressInfo(address string) {
+	data := map[string]interface{}{
+		"method": "getaddressinfo",
+		"params": [1]string{address},
 	}
 	return b.Call(data)
 }
