@@ -87,7 +87,7 @@ func TestCreateRawTransaction(t *testing.T) {
 }
 
 func TestFundRawTransaction(t *testing.T) {
-	tx, err := bitcoin.FundRawTransaction(rawtx, 0.00000001)
+	tx, err := bitcoin.FundRawTransaction(rawtx, 1)
 	if err != nil {
 		t.Errorf(err.Error())
 	}
