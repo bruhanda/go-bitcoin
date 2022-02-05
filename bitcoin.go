@@ -170,3 +170,11 @@ func (b Bitcoin) SendRawTransaction(rawtx string) (gjson.Result, error) {
 	}
 	return b.Call(data)
 }
+
+func (b Bitcoin) GetAddressInfo(address string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getaddressinfo",
+		"params": [1]string{address},
+	}
+	return b.Call(data)
+}
