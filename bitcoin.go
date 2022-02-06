@@ -178,3 +178,13 @@ func (b Bitcoin) GetAddressInfo(address string) (gjson.Result, error) {
 	}
 	return b.Call(data)
 }
+
+func (b Bitcoin) BumpFee(txid string, total_fee uint64) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "bumpfee",
+		"params": []interface{}{
+			txid, map[string]interface{}{"totalFee": total_fee},
+		},
+	}
+	return b.Call(data)
+}
