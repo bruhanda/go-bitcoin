@@ -129,7 +129,7 @@ func (b Bitcoin) CreateRawTransaction(inputs []map[string]interface{}, outputs [
 	return b.Call(data)
 }
 
-func (b Bitcoin) FundRawTransaction(rawtx string, feerate uint64) (gjson.Result, error) {
+func (b Bitcoin) FundRawTransaction(rawtx string, feerate int64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
 		"params": []interface{}{rawtx, map[string]interface{}{
@@ -179,7 +179,7 @@ func (b Bitcoin) GetAddressInfo(address string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-func (b Bitcoin) BumpFee(txid string, total_fee uint64) (gjson.Result, error) {
+func (b Bitcoin) BumpFee(txid string, total_fee int64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "bumpfee",
 		"params": []interface{}{
