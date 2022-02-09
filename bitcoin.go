@@ -88,6 +88,14 @@ func (b Bitcoin) GetBalance() (gjson.Result, error) {
 	return b.Call(data)
 }
 
+func (b Bitcoin) GetBalances() (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getbalance",
+		"params": []interface{}{},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "gettransaction",
