@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Config struct {
@@ -124,6 +125,14 @@ func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, erro
 	data := map[string]interface{}{
 		"method": "importaddress",
 		"params": [2]string{address, label},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) ImportPrivkey(privkey string, label string, rescan bool) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "importaddress",
+		"params": [3]string{privkey, label, strconv.FormatBool(rescan)},
 	}
 	return b.Call(data)
 }
