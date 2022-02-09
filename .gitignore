@@ -15,3 +15,5 @@
 # vendor/
 
 bitcoin_test.go
+go.mod
+.idea

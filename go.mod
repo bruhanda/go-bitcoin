@@ -2,7 +2,7 @@ module github.com/GrayFinance/go-bitcoin
 
 go 1.17
 
-require github.com/tidwall/gjson v1.12.1
+require github.com/tidwall/gjson v1.14.0
 
 require (
 	github.com/happierall/l v0.0.0-20190729144513-5eb32176fb02 // indirect

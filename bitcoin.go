@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/tidwall/gjson"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"github.com/tidwall/gjson"
 )
 
 type Config struct {
@@ -183,10 +183,20 @@ func (b Bitcoin) BumpFee(txid string, fee_rate int64) (gjson.Result, error) {
 		"method": "bumpfee",
 		"params": []interface{}{
 			txid, map[string]interface{}{
-				"fee_rate": fee_rate,
+				"fee_rate":    fee_rate,
 				"replaceable": true,
 			},
 		},
+	}
+	return b.Call(data)
+}
+
+// EstimateSmartFee stimates the approximate fee per kilobyte needed for a transaction..
+// https://bitcoincore.org/en/doc/0.16.0/rpc/util/estimatesmartfee/
+func (b *Bitcoin) EstimateSmartFeeWithMode(minconf int, mode string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "estimatesmartfee",
+		"params": []interface{}{minconf, mode},
 	}
 	return b.Call(data)
 }
