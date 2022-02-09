@@ -72,6 +72,14 @@ func (b Bitcoin) Call(params map[string]interface{}) (gjson.Result, error) {
 	return rjson.Get("result"), nil
 }
 
+func (b Bitcoin) GetBlockchainInfo() (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getblockchaininfo",
+		"params": []interface{}{},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) GetBlockCount() (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getblockcount",
