@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 type Config struct {
@@ -113,6 +112,14 @@ func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+func (b Bitcoin) GetRawTransaction(txid string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getrawtransaction",
+		"params": []interface{}{txid, true},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) ListUnspent() (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "listunspent",
@@ -157,7 +164,7 @@ func (b Bitcoin) SendToAddress(address string, amount float64, comment, commentT
 func (b Bitcoin) ImportPrivkey(privkey string, label string, rescan bool) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "importaddress",
-		"params": [3]string{privkey, label, strconv.FormatBool(rescan)},
+		"params": []interface{}{privkey, label, rescan},
 	}
 	return b.Call(data)
 }
