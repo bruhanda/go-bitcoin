@@ -99,7 +99,7 @@ func (b Bitcoin) GetBalance() (gjson.Result, error) {
 
 func (b Bitcoin) GetBalances() (gjson.Result, error) {
 	data := map[string]interface{}{
-		"method": "getbalance",
+		"method": "getbalances",
 		"params": []interface{}{},
 	}
 	return b.Call(data)
