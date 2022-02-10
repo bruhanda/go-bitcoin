@@ -129,6 +129,31 @@ func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, erro
 	return b.Call(data)
 }
 
+/*
+1. "address"            (string, required) The bitcoin address to send to.
+2. "amount"             (numeric or string, required) The amount in BTC to send. eg 0.1
+3. "comment"            (string, optional) A comment used to store what the transaction is for.
+                             This is not part of the transaction, just kept in your wallet.
+4. "comment_to"         (string, optional) A comment to store the name of the person or organization
+                             to which you're sending the transaction. This is not part of the
+                             transaction, just kept in your wallet.
+5. subtractfeefromamount  (boolean, optional, default=false) The fee will be deducted from the amount being sent.
+                             The recipient will receive less bitcoins than you enter in the amount field.
+6. replaceable            (boolean, optional) Allow this transaction to be replaced by a transaction with higher fees via BIP 125
+7. conf_target            (numeric, optional) Confirmation target (in blocks)
+8. "estimate_mode"      (string, optional, default=UNSET) The fee estimate mode, must be one of:
+       "UNSET"
+       "ECONOMICAL"
+       "CONSERVATIVE"
+*/
+func (b Bitcoin) SendToAddress(address string, amount float64, comment, commentTo string, subtractfeefromamount, replaceable bool, confTarget int, estimateMode string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "sendtoaddress",
+		"params": []interface{}{address, amount, comment, commentTo, subtractfeefromamount, replaceable, confTarget, estimateMode},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) ImportPrivkey(privkey string, label string, rescan bool) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "importaddress",
