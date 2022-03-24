@@ -128,6 +128,14 @@ func (b Bitcoin) ListUnspent(minConf, maxConf int8, addressesFilter []string) (g
 	return b.Call(data)
 }
 
+func (b Bitcoin) ListTransactions(count, skip int) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "listtransactions",
+		"params": []interface{}{"*", count, skip},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "importaddress",
