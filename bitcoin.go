@@ -136,6 +136,15 @@ func (b Bitcoin) ListTransactions(count, skip int) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+//* The abandontransaction RPC marks an in-wallet transaction and all its in-wallet descendants as abandoned. This allows their inputs to be respent.
+func (b Bitcoin) Abandontransaction(txid string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "abandontransaction",
+		"params": [1]string{txid},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "importaddress",
