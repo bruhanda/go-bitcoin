@@ -252,6 +252,23 @@ func (b Bitcoin) GetAddressInfo(address string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+//The testmempoolaccept RPC tests acceptance of a transaction to the mempool without adding it.
+func (b Bitcoin) Testmempoolaccept(rawtxs []string, allowhighfees bool) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getaddressinfo",
+		"params": []interface{}{rawtxs, allowhighfees},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) Importpubkey(pubkey, label string, rescan bool) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getaddressinfo",
+		"params": []interface{}{pubkey, label, rescan},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) BumpFee(txid string, fee_rate int64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "bumpfee",
