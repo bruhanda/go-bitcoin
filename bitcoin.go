@@ -202,11 +202,34 @@ func (b Bitcoin) CreateRawTransaction(inputs []map[string]interface{}, outputs [
 	return b.Call(data)
 }
 
-func (b Bitcoin) FundRawTransaction(rawtx string, feerate int64) (gjson.Result, error) {
+func (b Bitcoin) FundRawTransaction(hexstring string, feerate int64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
-		"params": []interface{}{rawtx, map[string]interface{}{
-			"fee_rate": feerate,
+		"params": []interface{}{hexstring, map[string]interface{}{
+			"feeRate":     feerate,
+			"replaceable": false,
+		}},
+	}
+	return b.Call(data)
+}
+
+//get fee from vout
+func (b Bitcoin) FundRawTransactionVoutFee(hexstring string, vout int) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "fundrawtransaction",
+		"params": []interface{}{hexstring, map[string]interface{}{
+			"subtractFeeFromOutputs": []int{vout},
+			"replaceable":            false,
+		}},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) FundRawTransactionWithoutParams(hexstring string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "fundrawtransaction",
+		"params": []interface{}{hexstring, map[string]interface{}{
+			"replaceable": false,
 		}},
 	}
 	return b.Call(data)
@@ -263,7 +286,7 @@ func (b Bitcoin) Testmempoolaccept(rawtxs []string, allowhighfees bool) (gjson.R
 
 func (b Bitcoin) Importpubkey(pubkey, label string, rescan bool) (gjson.Result, error) {
 	data := map[string]interface{}{
-		"method": "getaddressinfo",
+		"method": "importpubkey",
 		"params": []interface{}{pubkey, label, rescan},
 	}
 	return b.Call(data)
