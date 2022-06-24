@@ -202,7 +202,7 @@ func (b Bitcoin) CreateRawTransaction(inputs []map[string]interface{}, outputs [
 	return b.Call(data)
 }
 
-func (b Bitcoin) FundRawTransaction(hexstring string, feerate int64) (gjson.Result, error) {
+func (b Bitcoin) FundRawTransaction(hexstring string, feerate float64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
 		"params": []interface{}{hexstring, map[string]interface{}{
