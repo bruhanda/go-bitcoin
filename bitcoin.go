@@ -264,11 +264,11 @@ func (b Bitcoin) DumpPrivKey(wallet string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-func (b Bitcoin) SignRawTransactionWithKey(rawtx string, key string) (gjson.Result, error) {
+func (b Bitcoin) SignRawTransactionWithKey(rawtx string, privkey string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "signrawtransactionwithkey",
 		"params": []interface{}{rawtx, []string{
-			key,
+			privkey,
 		}},
 	}
 	return b.Call(data)
