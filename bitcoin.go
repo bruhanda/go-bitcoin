@@ -256,6 +256,24 @@ func (b Bitcoin) SignRawTransactionWithWallet(rawtx string) (gjson.Result, error
 	return b.Call(data)
 }
 
+func (b Bitcoin) DumpPrivKey(wallet string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "dumpprivkey",
+		"params": [1]string{wallet},
+	}
+	return b.Call(data)
+}
+
+func (b Bitcoin) SignRawTransactionWithKey(rawtx string, key string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "signrawtransactionwithkey",
+		"params": []interface{}{rawtx, []string{
+			key,
+		}},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) ValidateAddress(address string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "validateaddress",
