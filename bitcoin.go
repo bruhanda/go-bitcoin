@@ -272,6 +272,14 @@ func (b Bitcoin) SignRawTransaction(ewTx string, inputs []map[string]interface{}
 	return b.Call(data)
 }
 
+func (b Bitcoin) SignRawTransactionAgain(ewTx string, inputs []map[string]interface{}) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "signrawtransaction",
+		"params": []interface{}{ewTx, inputs},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) SignRawTransactionWithKey(rawtx string, privkey string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "signrawtransactionwithkey",
