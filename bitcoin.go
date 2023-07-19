@@ -120,7 +120,7 @@ func (b Bitcoin) GetRawTransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-func (b Bitcoin) ListUnspent(minConf, maxConf int8, addressesFilter []string, includeUnsafe bool) (gjson.Result, error) {
+func (b Bitcoin) ListUnspent(minConf, maxConf int, addressesFilter []string, includeUnsafe bool) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "listunspent",
 		"params": []interface{}{minConf, maxConf, addressesFilter, includeUnsafe},
