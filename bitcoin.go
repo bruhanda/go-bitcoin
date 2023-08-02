@@ -96,14 +96,16 @@ func (b Bitcoin) GetBalance() (gjson.Result, error) {
 	return b.Call(data)
 }
 
-func (b Bitcoin) GetBalances() (gjson.Result, error) {
+//Returns details on the active state of the TX memory pool.
+func (b Bitcoin) GetMempoolinfo() (gjson.Result, error) {
 	data := map[string]interface{}{
-		"method": "getbalances",
+		"method": "getmempoolinfo",
 		"params": []interface{}{},
 	}
 	return b.Call(data)
 }
 
+//Get detailed information about in-wallet transaction
 func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "gettransaction",
@@ -112,6 +114,7 @@ func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+//The getrawtransaction RPC returns the raw transaction data.
 func (b Bitcoin) GetRawTransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getrawtransaction",
@@ -120,6 +123,8 @@ func (b Bitcoin) GetRawTransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+//The listunspent RPC returns array of unspent transaction outputs with between minconf and maxconf (inclusive)
+//confirmations. Optionally filter to only include txouts paid to specified addresses.
 func (b Bitcoin) ListUnspent(minConf, maxConf int, addressesFilter []string, includeUnsafe bool) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "listunspent",
@@ -128,6 +133,7 @@ func (b Bitcoin) ListUnspent(minConf, maxConf int, addressesFilter []string, inc
 	return b.Call(data)
 }
 
+//The listtransactions RPC returns up to 'count' most recent transactions skipping the first 'from' transactions.
 func (b Bitcoin) ListTransactions(count, skip int) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "listtransactions",
@@ -136,7 +142,8 @@ func (b Bitcoin) ListTransactions(count, skip int) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//* The abandontransaction RPC marks an in-wallet transaction and all its in-wallet descendants as abandoned. This allows their inputs to be respent.
+//The abandontransaction RPC marks an in-wallet transaction and all its in-wallet descendants as abandoned.
+//This allows their inputs to be respent.
 func (b Bitcoin) Abandontransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "abandontransaction",
@@ -145,6 +152,8 @@ func (b Bitcoin) Abandontransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+//The importaddress RPC adds an address or script (in hex) that can be watched as if it were in your wallet
+//but cannot be used to spend. Requires a new wallet backup.
 func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "importaddress",
@@ -238,6 +247,7 @@ func (b Bitcoin) FundRawTransactionVoutFee(hexstring string, vout int, feerate f
 	return b.Call(data)
 }
 
+//The fundrawtransaction RPC adds inputs to a transaction until it has enough in value to meet its out value.
 func (b Bitcoin) FundRawTransactionWithoutParams(hexstring string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
