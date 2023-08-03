@@ -96,6 +96,14 @@ func (b Bitcoin) GetBalance() (gjson.Result, error) {
 	return b.Call(data)
 }
 
+func (b Bitcoin) GetBalances() (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getbalances",
+		"params": []interface{}{},
+	}
+	return b.Call(data)
+}
+
 //Returns details on the active state of the TX memory pool.
 func (b Bitcoin) GetMempoolinfo() (gjson.Result, error) {
 	data := map[string]interface{}{
