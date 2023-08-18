@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/tidwall/gjson"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -54,7 +54,7 @@ func (b Bitcoin) Call(params map[string]interface{}) (gjson.Result, error) {
 	}
 	defer res.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		return gjson.Result{}, err
 	}
