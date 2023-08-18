@@ -96,6 +96,7 @@ func (b Bitcoin) GetBalance() (gjson.Result, error) {
 	return b.Call(data)
 }
 
+// Returns an object with all balances in BTC.
 func (b Bitcoin) GetBalances() (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getbalances",
@@ -104,7 +105,7 @@ func (b Bitcoin) GetBalances() (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//Returns details on the active state of the TX memory pool.
+// Returns details on the active state of the TX memory pool.
 func (b Bitcoin) GetMempoolinfo() (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getmempoolinfo",
@@ -113,7 +114,7 @@ func (b Bitcoin) GetMempoolinfo() (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//Get detailed information about in-wallet transaction
+// Get detailed information about in-wallet transaction
 func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "gettransaction",
@@ -122,7 +123,7 @@ func (b Bitcoin) GetTransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//The getrawtransaction RPC returns the raw transaction data.
+// The getrawtransaction RPC returns the raw transaction data.
 func (b Bitcoin) GetRawTransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getrawtransaction",
@@ -131,8 +132,8 @@ func (b Bitcoin) GetRawTransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//The listunspent RPC returns array of unspent transaction outputs with between minconf and maxconf (inclusive)
-//confirmations. Optionally filter to only include txouts paid to specified addresses.
+// The listunspent RPC returns array of unspent transaction outputs with between minconf and maxconf (inclusive)
+// confirmations. Optionally filter to only include txouts paid to specified addresses.
 func (b Bitcoin) ListUnspent(minConf, maxConf int, addressesFilter []string, includeUnsafe bool) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "listunspent",
@@ -141,7 +142,7 @@ func (b Bitcoin) ListUnspent(minConf, maxConf int, addressesFilter []string, inc
 	return b.Call(data)
 }
 
-//The listtransactions RPC returns up to 'count' most recent transactions skipping the first 'from' transactions.
+// The listtransactions RPC returns up to 'count' most recent transactions skipping the first 'from' transactions.
 func (b Bitcoin) ListTransactions(count, skip int) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "listtransactions",
@@ -150,8 +151,8 @@ func (b Bitcoin) ListTransactions(count, skip int) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//The abandontransaction RPC marks an in-wallet transaction and all its in-wallet descendants as abandoned.
-//This allows their inputs to be respent.
+// The abandontransaction RPC marks an in-wallet transaction and all its in-wallet descendants as abandoned.
+// This allows their inputs to be respent.
 func (b Bitcoin) Abandontransaction(txid string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "abandontransaction",
@@ -160,8 +161,8 @@ func (b Bitcoin) Abandontransaction(txid string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//The importaddress RPC adds an address or script (in hex) that can be watched as if it were in your wallet
-//but cannot be used to spend. Requires a new wallet backup.
+// The importaddress RPC adds an address or script (in hex) that can be watched as if it were in your wallet
+// but cannot be used to spend. Requires a new wallet backup.
 func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "importaddress",
@@ -171,21 +172,21 @@ func (b Bitcoin) ImportAddress(address string, label string) (gjson.Result, erro
 }
 
 /*
-1. "address"            (string, required) The bitcoin address to send to.
-2. "amount"             (numeric or string, required) The amount in BTC to send. eg 0.1
-3. "comment"            (string, optional) A comment used to store what the transaction is for.
-                             This is not part of the transaction, just kept in your wallet.
-4. "comment_to"         (string, optional) A comment to store the name of the person or organization
-                             to which you're sending the transaction. This is not part of the
-                             transaction, just kept in your wallet.
-5. subtractfeefromamount  (boolean, optional, default=false) The fee will be deducted from the amount being sent.
-                             The recipient will receive less bitcoins than you enter in the amount field.
-6. replaceable            (boolean, optional) Allow this transaction to be replaced by a transaction with higher fees via BIP 125
-7. conf_target            (numeric, optional) Confirmation target (in blocks)
-8. "estimate_mode"      (string, optional, default=UNSET) The fee estimate mode, must be one of:
-       "UNSET"
-       "ECONOMICAL"
-       "CONSERVATIVE"
+ 1. "address"            (string, required) The bitcoin address to send to.
+ 2. "amount"             (numeric or string, required) The amount in BTC to send. eg 0.1
+ 3. "comment"            (string, optional) A comment used to store what the transaction is for.
+    This is not part of the transaction, just kept in your wallet.
+ 4. "comment_to"         (string, optional) A comment to store the name of the person or organization
+    to which you're sending the transaction. This is not part of the
+    transaction, just kept in your wallet.
+ 5. subtractfeefromamount  (boolean, optional, default=false) The fee will be deducted from the amount being sent.
+    The recipient will receive less bitcoins than you enter in the amount field.
+ 6. replaceable            (boolean, optional) Allow this transaction to be replaced by a transaction with higher fees via BIP 125
+ 7. conf_target            (numeric, optional) Confirmation target (in blocks)
+ 8. "estimate_mode"      (string, optional, default=UNSET) The fee estimate mode, must be one of:
+    "UNSET"
+    "ECONOMICAL"
+    "CONSERVATIVE"
 */
 func (b Bitcoin) SendToAddress(address string, amount float64, comment, commentTo string, subtractfeefromamount, replaceable bool, confTarget int, estimateMode string) (gjson.Result, error) {
 	data := map[string]interface{}{
@@ -230,7 +231,7 @@ func (b Bitcoin) FundRawTransaction(hexstring string, feerate float64) (gjson.Re
 	return b.Call(data)
 }
 
-//get fee from vout
+// get fee from vout
 func (b Bitcoin) FundRawTransactionVout(hexstring string, vout int) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
@@ -242,7 +243,7 @@ func (b Bitcoin) FundRawTransactionVout(hexstring string, vout int) (gjson.Resul
 	return b.Call(data)
 }
 
-//get fee from vout
+// get fee from vout
 func (b Bitcoin) FundRawTransactionVoutFee(hexstring string, vout int, feerate float64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
@@ -255,7 +256,7 @@ func (b Bitcoin) FundRawTransactionVoutFee(hexstring string, vout int, feerate f
 	return b.Call(data)
 }
 
-//The fundrawtransaction RPC adds inputs to a transaction until it has enough in value to meet its out value.
+// The fundrawtransaction RPC adds inputs to a transaction until it has enough in value to meet its out value.
 func (b Bitcoin) FundRawTransactionWithoutParams(hexstring string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "fundrawtransaction",
@@ -340,7 +341,7 @@ func (b Bitcoin) GetAddressInfo(address string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
-//The testmempoolaccept RPC tests acceptance of a transaction to the mempool without adding it.
+// The testmempoolaccept RPC tests acceptance of a transaction to the mempool without adding it.
 func (b Bitcoin) Testmempoolaccept(rawtxs []string, allowhighfees bool) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getaddressinfo",
