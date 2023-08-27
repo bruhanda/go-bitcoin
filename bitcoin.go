@@ -283,12 +283,25 @@ func (b Bitcoin) DumpPrivKey(wallet string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+// Sign inputs for raw transaction (serialized, hex-encoded).
+// The second optional argument (may be null) is an array of previous transaction outputs that
+// this transaction depends on but may not yet be in the block chain.
+// The third optional argument (may be null) is an array of base58-encoded private
+// keys that, if given, will be the only keys used to sign the transaction.
 func (b Bitcoin) SignRawTransaction(ewTx string, inputs []map[string]interface{}, privKeys []string) (gjson.Result, error) {
 	data := map[string]interface{}{
-		"method": "signrawtransactionwithwallet",
-		"params": []interface{}{ewTx, inputs, privKeys},
+		"jsonrpc": "1.0",
+		"id":      "signrawtransaction",
+		"method":  "signrawtransaction",
+		"params":  []interface{}{ewTx, inputs, privKeys},
 	}
-	return b.Call(data)
+
+	resp, err := b.Call(data)
+	if err != nil {
+		return gjson.Result{}, err
+	}
+
+	return resp, nil
 }
 
 func (b Bitcoin) SignRawTransactionAgain(ewTx string, inputs []map[string]interface{}) (gjson.Result, error) {
