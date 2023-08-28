@@ -338,10 +338,15 @@ func (b Bitcoin) DecodeRawTransaction(rawtx string) (gjson.Result, error) {
 	return b.Call(data)
 }
 
+// Submit a raw transaction (serialized, hex-encoded) to local node and network.
+// Note that the transaction will be sent unconditionally to all peers,
+// so using this for manual rebroadcast may degrade privacy by leaking the transaction’s origin,
+// as nodes will normally not rebroadcast non-wallet transactions already in their mempool.
+// Also see createrawtransaction and signrawtransactionwithkey calls.
 func (b Bitcoin) SendRawTransaction(rawtx string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "sendrawtransaction",
-		"params": [1]string{rawtx},
+		"params": []interface{}{rawtx},
 	}
 	return b.Call(data)
 }
