@@ -88,6 +88,17 @@ func (b Bitcoin) GetBlockCount() (gjson.Result, error) {
 	return b.Call(data)
 }
 
+// If verbosity is 0, returns a string that is serialized, hex-encoded data for block ‘hash’.
+// If verbosity is 1, returns an Object with information about block ‘hash’.
+// If verbosity is 2, returns an Object with information about block ‘hash’ and information about each transaction.
+func (b Bitcoin) GetBlock(block_hash string, verbosity int) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getblock",
+		"params": []interface{}{block_hash, verbosity},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) GetBalance() (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getbalance",
