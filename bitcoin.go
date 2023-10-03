@@ -387,6 +387,15 @@ func (b Bitcoin) Importpubkey(pubkey, label string, rescan bool) (gjson.Result, 
 	return b.Call(data)
 }
 
+// Returns hash of block in best-block-chain at height provided.
+func (b Bitcoin) Getblockhash(height string) (gjson.Result, error) {
+	data := map[string]interface{}{
+		"method": "getblockhash",
+		"params": []interface{}{height},
+	}
+	return b.Call(data)
+}
+
 func (b Bitcoin) BumpFee(txid string, fee_rate int64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "bumpfee",
