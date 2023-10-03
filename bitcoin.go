@@ -388,7 +388,7 @@ func (b Bitcoin) Importpubkey(pubkey, label string, rescan bool) (gjson.Result, 
 }
 
 // Returns hash of block in best-block-chain at height provided.
-func (b Bitcoin) Getblockhash(height string) (gjson.Result, error) {
+func (b Bitcoin) Getblockhash(height int64) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "getblockhash",
 		"params": []interface{}{height},
