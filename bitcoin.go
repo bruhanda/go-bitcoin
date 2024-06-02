@@ -281,7 +281,7 @@ func (b Bitcoin) FundRawTransactionWithoutParams(hexstring string) (gjson.Result
 func (b Bitcoin) SignRawTransactionWithWallet(rawtx string) (gjson.Result, error) {
 	data := map[string]interface{}{
 		"method": "signrawtransactionwithwallet",
-		"params": [1]string{rawtx},
+		"params": []string{rawtx},
 	}
 	return b.Call(data)
 }
